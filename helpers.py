@@ -298,3 +298,15 @@ def downsample(X,CL):
     
     return X_reb, CL_reb
     
+def discreteAlcohol(df):
+    df["alcohol_cat"] = 'L'
+    mean = df["alcohol"].mean()
+    stddev = df["alcohol"].std()
+    for index, series in df.iterrows():
+        alcohol = series["alcohol"]
+        if alcohol < (mean-stddev):
+            df.loc[index, "alcohol_cat"] = 'L'
+        elif alcohol > (mean+stddev):
+            df.loc[index, "alcohol_cat"] = 'H'
+        else:
+            df.loc[index, "alcohol_cat"] = 'M'

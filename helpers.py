@@ -310,3 +310,14 @@ def discreteAlcohol(df):
             df.loc[index, "alcohol_cat"] = 'H'
         else:
             df.loc[index, "alcohol_cat"] = 'M'
+
+def discreteSugar(df):
+    df["isSweet"] = 0
+    threshold = df["residual sugar"].median()
+
+    for index, series in df.iterrows():
+        sugar = series["residual sugar"]
+        if sugar < threshold:
+            df.loc[index, "isSweet"] = 0
+        else:
+            df.loc[index, "isSweet"] = 1
